@@ -1,0 +1,22 @@
+# See: https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[package]
+name = "pipes"
+version = "0.1.0"
+edition = "2024"
+publish = false
+
+[dependencies]
+anyhow = "1.0.100"
+clap = "4.5.54"
+crossterm = "0.29.0"
+
+[lints.rust]
+nonstandard_style = { level = "deny", priority = -1 }
+unsafe_code = "forbid"
+
+[lints.clippy]
+pedantic = { level = "warn", priority = -1 }
+similar_names = "allow"
+unused_trait_names = "warn"
+unwrap_used = "warn"
