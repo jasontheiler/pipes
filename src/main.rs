@@ -1,6 +1,13 @@
-use crossterm::{cursor, terminal};
+use crossterm::{cursor, style::Stylize as _, terminal};
 
-fn main() -> anyhow::Result<()> {
+fn main() {
+    if let Err(err) = run() {
+        eprintln!("{} {err:#}", "error:".dark_red().bold());
+        std::process::exit(1);
+    }
+}
+
+fn run() -> anyhow::Result<()> {
     let mut stdout = std::io::stdout();
 
     terminal::enable_raw_mode()?;
