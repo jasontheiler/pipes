@@ -52,10 +52,10 @@ fn run(args: &Args) -> io::Result<()> {
 
         stdout.flush()?;
 
-        if event::poll(tick_duration.saturating_sub(start.elapsed()))? {
-            if let event::Event::Key(_) = event::read()? {
-                break;
-            }
+        if event::poll(tick_duration.saturating_sub(start.elapsed()))?
+            && let event::Event::Key(_) = event::read()?
+        {
+            break;
         }
 
         tick = tick.wrapping_add(1);
