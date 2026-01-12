@@ -1,4 +1,5 @@
 use clap::Parser as _;
+use crossterm::style;
 
 #[derive(Debug, Clone, clap::Parser)]
 #[command(version, about)]
@@ -20,10 +21,23 @@ pub struct Args {
         default_value = "0.9"
     )]
     pub straight_prob: f64,
+    /// Colors of the pipes.
+    #[arg(
+        short,
+        long,
+        value_delimiter = ',',
+        value_parser = parse_color,
+        default_value = "red,green,yellow,blue,magenta,cyan,white,black",
+    )]
+    pub colors: Vec<style::Color>,
 }
 
 impl Args {
     pub fn new() -> Self {
         Self::parse()
     }
+}
+
+fn parse_color(s: &str) -> anyhow::Result<style::Color> {
+    style::Color::try_from(s).map_err(|()| anyhow::format_err!("invalid color"))
 }

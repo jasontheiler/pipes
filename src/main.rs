@@ -6,11 +6,7 @@ use std::{
     process, time,
 };
 
-use crossterm::{
-    QueueableCommand as _, cursor, event,
-    style::{self, Stylize as _},
-    terminal,
-};
+use crossterm::{QueueableCommand as _, cursor, event, style::Stylize as _, terminal};
 
 use crate::{args::Args, pipe::Pipe};
 
@@ -29,8 +25,12 @@ fn run(args: &Args) -> io::Result<()> {
     crossterm::execute!(stdout, terminal::EnterAlternateScreen, cursor::Hide)?;
 
     let (cols, rows) = terminal::size()?;
+    let mut colors_iter = args.colors.iter().copied().cycle();
     let mut pipes = (0..args.number)
-        .map(|_| Pipe::new(cols, rows, args.straight_prob, style::Color::Blue))
+        .map(|_| {
+            let color = colors_iter.next().expect("iterator should be endless");
+            Pipe::new(cols, rows, args.straight_prob, color)
+        })
         .collect::<Vec<_>>();
 
     let mut tick = 0u32;
