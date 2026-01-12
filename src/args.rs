@@ -11,7 +11,7 @@ pub struct Args {
     #[arg(short, long, default_value = "60")]
     pub tickrate: u32,
     /// Reset after amount of ticks. Set to 0 to never reset.
-    #[arg(short, long, value_name = "TICKS", default_value = "600")]
+    #[arg(short, long, value_name = "TICKS", default_value = "900")]
     pub reset: u32,
     /// Probability of a straight pipe fitting.
     #[arg(
