@@ -24,12 +24,13 @@ fn run(args: &Args) -> io::Result<()> {
     terminal::enable_raw_mode()?;
     crossterm::execute!(stdout, terminal::EnterAlternateScreen, cursor::Hide)?;
 
+    let mut rng = rand::rng();
     let (cols, rows) = terminal::size()?;
     let mut colors_iter = args.colors.iter().copied().cycle();
     let mut pipes = (0..args.number)
         .map(|_| {
             let color = colors_iter.next().expect("iterator should be endless");
-            Pipe::new(cols, rows, args.straight_prob, color)
+            Pipe::new(&mut rng, cols, rows, args.straight_prob, color)
         })
         .collect::<Vec<_>>();
 
@@ -46,7 +47,7 @@ fn run(args: &Args) -> io::Result<()> {
 
         let (cols, rows) = terminal::size()?;
         for pipe in &mut pipes {
-            pipe.progress(cols, rows);
+            pipe.progress(&mut rng, cols, rows);
             pipe.draw(&mut stdout)?;
         }
 

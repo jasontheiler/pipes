@@ -20,16 +20,22 @@ pub struct Pipe {
 }
 
 impl Pipe {
-    pub fn new(cols: u16, rows: u16, straight_prob: f64, color: style::Color) -> Self {
-        let direction = Direction::random();
+    pub fn new(
+        rng: &mut impl rand::Rng,
+        cols: u16,
+        rows: u16,
+        straight_prob: f64,
+        color: style::Color,
+    ) -> Self {
+        let direction = Direction::random(rng);
         let straight_prob = straight_prob.clamp(0.0, 1.0);
         let elbow_prob = (1.0 - straight_prob) / 2.0;
         let direction_change_distr =
             weighted::WeightedIndex::new([elbow_prob, elbow_prob, straight_prob])
                 .expect("weights should always be valid");
         Self {
-            col: rand::random_range(0..cols),
-            row: rand::random_range(0..rows),
+            col: rng.random_range(0..cols),
+            row: rng.random_range(0..rows),
             half_row: false,
             direction,
             direction_next: direction,
@@ -39,14 +45,14 @@ impl Pipe {
         }
     }
 
-    pub fn progress(&mut self, cols: u16, rows: u16) {
+    pub fn progress(&mut self, rng: &mut impl rand::Rng, cols: u16, rows: u16) {
         if self.half_row {
             self.half_row = false;
             return;
         }
 
         self.direction = self.direction_next;
-        match self.direction_change_distr.sample(&mut rand::rng()) {
+        match self.direction_change_distr.sample(rng) {
             0 => self.direction_next.change_left(),
             1 => self.direction_next.change_right(),
             _ => (),

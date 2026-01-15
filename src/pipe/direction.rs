@@ -7,8 +7,8 @@ pub enum Direction {
 }
 
 impl Direction {
-    pub fn random() -> Self {
-        match rand::random_range(0..4) {
+    pub fn random(rng: &mut impl rand::Rng) -> Self {
+        match rng.random_range(0..4) {
             0 => Direction::Up,
             1 => Direction::Down,
             2 => Direction::Left,
