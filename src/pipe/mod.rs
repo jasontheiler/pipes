@@ -27,7 +27,7 @@ impl Pipe {
         straight_prob: f64,
         color: style::Color,
     ) -> Self {
-        let direction = Direction::random(rng);
+        let direction = rng.random::<Direction>();
         let straight_prob = straight_prob.clamp(0.0, 1.0);
         let elbow_prob = (1.0 - straight_prob) / 2.0;
         let direction_change_distr =

@@ -1,3 +1,5 @@
+use rand::distr;
+
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum Direction {
     Up,
@@ -7,15 +9,6 @@ pub enum Direction {
 }
 
 impl Direction {
-    pub fn random(rng: &mut impl rand::Rng) -> Self {
-        match rng.random_range(0..4) {
-            0 => Direction::Up,
-            1 => Direction::Down,
-            2 => Direction::Left,
-            _ => Direction::Right,
-        }
-    }
-
     pub fn change_left(&mut self) {
         *self = match self {
             Direction::Up => Direction::Left,
@@ -32,5 +25,16 @@ impl Direction {
             Direction::Left => Direction::Up,
             Direction::Right => Direction::Down,
         };
+    }
+}
+
+impl distr::Distribution<Direction> for distr::StandardUniform {
+    fn sample<R: rand::Rng + ?Sized>(&self, rng: &mut R) -> Direction {
+        match rng.random_range(0..4) {
+            0 => Direction::Up,
+            1 => Direction::Down,
+            2 => Direction::Left,
+            _ => Direction::Right,
+        }
     }
 }
