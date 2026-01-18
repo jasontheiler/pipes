@@ -65,7 +65,9 @@ impl Pipe {
                 } else {
                     self.row -= 1;
                 }
-                self.half_row = true;
+                if self.direction_next == Direction::Up {
+                    self.half_row = true;
+                }
             }
             Direction::Down => {
                 if self.row >= rows - 1 {
@@ -73,7 +75,9 @@ impl Pipe {
                 } else {
                     self.row += 1;
                 }
-                self.half_row = true;
+                if self.direction_next == Direction::Down {
+                    self.half_row = true;
+                }
             }
             Direction::Left => {
                 if self.col == 0 {
