@@ -1,4 +1,26 @@
-pub const HEAVY: CharSet = CharSet {
+pub const PLAIN: CharSet = CharSet {
+    horizontal: '─',
+    vertical: '│',
+    up: '╵',
+    up_left: '┘',
+    up_right: '└',
+    down: '╷',
+    down_left: '┐',
+    down_right: '┌',
+};
+
+pub const ROUNDED: CharSet = CharSet {
+    horizontal: '─',
+    vertical: '│',
+    up: '╵',
+    up_left: '╯',
+    up_right: '╰',
+    down: '╷',
+    down_left: '╮',
+    down_right: '╭',
+};
+
+pub const THICK: CharSet = CharSet {
     horizontal: '━',
     vertical: '┃',
     up: '╹',
@@ -7,6 +29,17 @@ pub const HEAVY: CharSet = CharSet {
     down: '╻',
     down_left: '┓',
     down_right: '┏',
+};
+
+pub const BLOCK: CharSet = CharSet {
+    horizontal: '▀',
+    vertical: '█',
+    up: '▀',
+    up_left: '▀',
+    up_right: '▀',
+    down: '▄',
+    down_left: '█',
+    down_right: '█',
 };
 
 #[derive(Debug, Clone, Copy)]

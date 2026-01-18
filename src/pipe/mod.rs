@@ -40,7 +40,7 @@ impl Pipe {
             direction,
             direction_next: direction,
             direction_change_distr,
-            char_set: char_set::HEAVY,
+            char_set: char_set::THICK,
             color,
         }
     }
